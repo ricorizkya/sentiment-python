@@ -1,22 +1,34 @@
+# Import Module Flask dan Yang Lain Untuk Keperluan HTTP Server
 from flask import Flask, json, render_template,request,session,redirect,url_for,jsonify,send_file
+
+# Import Module Koneksi Mysql Untuk Mengakses Database
 from database.koneksi import mydb
 
+# Import Module json untuk manipulasi data python menjadi json
 import json
 
+# Fungsi Utils Untuk Preprocessing Text dan Generate Model
 from utils import preprocessingtext, create_model_bydataset
 
+# Import Module Pandas
 import pandas as pd
 
+# Import Module Numpy
 import numpy as np
-# import matplotlib.pyplot as plt
-# from matplotlib.backends.backend_pdf import PdfPages
 
+# Module pdfkit untuk mengubah HTML menjadi PDF
 import pdfkit as pdf
 
+
+# Inisiasi Variabel main application flask
 app = Flask(__name__)
 app.secret_key="thisisasecretkey"
 
 
+# Route GET dan POST untuk nedpoint "/" 
+# Berisi fungsi untuk mengecek session apakah sudah login atau belum
+# Kemudian terdapat fungsi ketika dilakukan request POST maka melakukan pencocokan antara username password input dengan yang berada pada database
+# Ketika dilakukan request GET maka akan menampilkan html biasa
 
 @app.route("/", methods=["POST","GET"])
 def index():
@@ -53,6 +65,10 @@ def index():
 
     return render_template("login.html")
 
+
+# Route GET untuk endpoint /dashboard
+# Berfungsi untuk menampilkan halaman dashboard dan dilakukan logic query pada database yang diperlukan
+
 @app.route("/dashboard")
 def dashboard():
 
@@ -71,6 +87,9 @@ def dashboard():
 
     email = session["email"]
     return render_template("dashboard.html",email=email,count=len(row))
+
+# Route GET dan POST untuk endpoint /klasifikasicuitan
+# Berfungsi untuk menghandle klasifikasi single cuitan
 
 @app.route("/klasifikasicuitan", methods=["POST","GET"])
 def klasifikasicuitan():
@@ -95,6 +114,9 @@ def klasifikasicuitan():
 
     email = session["email"]
     return render_template("klasifikasicuitan.html",email=email)
+
+# Route GET dan POST untuk endpoint /klasifikasicuitanexcel
+# Berfungsi untuk menghandle klasifikasi bulk cuitan
 
 @app.route("/klasifikasicuitanexcel", methods=["POST","GET"])
 def klasifikasicuitanexcel():
@@ -139,6 +161,10 @@ def klasifikasicuitanexcel():
         return render_template("klasifikasicuitanexcel.html",email=email,payload=enumerate(payload),dump=json.dumps(payload))
     email = session["email"]
     return render_template("klasifikasicuitanexcel.html",email=email,payload=[],dump=json.dumps([]))
+
+
+# Route GET dan POST untuk endpoint /importdataset
+# Berisi fungsi untuk melakukan operasi import dataset dengan excel
 
 @app.route("/importdataset",methods=["POST","GET"])
 def importdataset():
@@ -198,12 +224,17 @@ def importdataset():
 
     return render_template("importdataset.html",email=email,payload=enumerate(payload))
 
+# GET Request untuk endpoint /keluar
+# Berfungsi untuk menghapus session 
+
 @app.route("/keluar")
 def keluar():
     session["login"] = None
     session["email"] = None
     session["password"] = None
     return redirect(url_for("index"))
+
+# Fungsi flask untuk menjalankan app
 
 if __name__=="__main__":
     app.run(debug=True)
