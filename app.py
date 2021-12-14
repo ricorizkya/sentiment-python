@@ -82,11 +82,20 @@ def dashboard():
     cursor.execute("SELECT * FROM dataset")
     row = cursor.fetchall()
 
+    lenpositif = 0
+    lennegatif = 0
+
+    for x in row:
+        if x[1]=="Positif":
+            lenpositif=lenpositif+1
+        else:
+            lennegatif=lennegatif+1
+
     cursor.close()
     mydb.close()
 
     email = session["email"]
-    return render_template("dashboard.html",email=email,count=len(row))
+    return render_template("dashboard.html",email=email,count=len(row),lenpositif=lenpositif,lennegatif=lennegatif)
 
 # Route GET dan POST untuk endpoint /klasifikasicuitan
 # Berfungsi untuk menghandle klasifikasi single cuitan
