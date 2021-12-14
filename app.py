@@ -38,7 +38,8 @@ def index():
 
 @app.route("/dashboard")
 def dashboard():
-    return "dashboard"
+    email = session["email"]
+    return render_template("dashboard.html",email=email)
 
 if __name__=="__main__":
     app.run(debug=True)
