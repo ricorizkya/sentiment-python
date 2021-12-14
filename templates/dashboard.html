@@ -293,7 +293,7 @@
             </div>
             <!-- Card stats -->
             <div class="row">
-              <div class="col-xl-4 col-md-4">
+              <div class="col-xl-12 col-md-12">
                 <div class="card card-stats">
                   <!-- Card body -->
                   <div class="card-body">
@@ -302,10 +302,36 @@
                   </div>
                 </div>
               </div>
-             
+           
               
               
-              
+            </div>
+            <div class="row">
+              <div  class="col-xl-6 col-md-6">
+                <div class="card card-stats">
+                  <!-- Card body -->
+                  <div class="card-body">
+                    <div>
+                      <canvas id="myChart"></canvas>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div  class="col-xl-6 col-md-6">
+                <div class="card">
+                  <!-- Card body -->
+                  <div class="card-body">
+                    <div>
+                      <div class="row" style="padding-left:10px;padding-right:10px">Jumlah Sentimen Positif :</div>
+                      <div class="row" style="font-size:35px;padding-left:10px;padding-right:10px;margin-top:5px">{{lenpositif}}</div>
+                    </div>
+                    <div class="mt-3">
+                      <div class="row" style="padding-left:10px;padding-right:10px">Jumlah Sentimen Negatif :</div>
+                      <div class="row" style="font-size:35px;padding-left:10px;padding-right:10px;margin-top:5px">{{lennegatif}}</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -344,6 +370,7 @@
     </div>
     <!-- Argon Scripts -->
     <!-- Core -->
+    
     <script src="static/assets/vendor/jquery/dist/jquery.min.js"></script>
     <script src="static/assets/vendor/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="static/assets/vendor/js-cookie/js.cookie.js"></script>
@@ -354,6 +381,33 @@
     <script src="static/assets/vendor/chart.js/dist/Chart.extension.js"></script>
     <!-- Argon JS -->
     <script src="static/assets/js/argon.js?v=1.2.0"></script><div class="backdrop d-xl-none" data-action="sidenav-unpin" data-target="undefined"></div><div style="left: -1000px; overflow: scroll; position: absolute; top: -1000px; border: none; box-sizing: content-box; height: 200px; margin: 0px; padding: 0px; width: 200px;"><div style="border: none; box-sizing: content-box; height: 200px; margin: 0px; padding: 0px; width: 200px;"></div></div>
-  
-  
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+         const data = {
+  labels: [
+    'Positif',
+    'Negatif',
+  ],
+  datasets: [{
+    label: 'My First Dataset',
+    data: [{{lenpositif}}, {{lennegatif}}],
+    backgroundColor: [
+      'rgb(255, 99, 132)',
+      'rgb(54, 162, 235)',
+    ],
+    hoverOffset: 4
+  }]
+};
+
+const config = {
+  type: 'doughnut',
+  data: data,
+};
+
+
+        const myChart = new Chart(
+    document.getElementById('myChart'),
+    config
+  );
+    </script>
   </body></html>
