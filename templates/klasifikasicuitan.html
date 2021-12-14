@@ -3,7 +3,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="Start your development with a Dashboard for Bootstrap 4.">
     <meta name="author" content="Creative Tim">
-    <title>Acne Fighter Sentiment Analysis - Import Dataset</title>
+    <title>Acne Fighter Sentiment Analysis - Klasifikasi Cuitan</title>
     <link rel="stylesheet" href="https://unpkg.com/bootstrap-table@1.19.1/dist/bootstrap-table.min.css">
     <!-- Favicon -->
     <link rel="icon" href="static/assets/img/brand/favicon.png" type="image/png">
@@ -40,7 +40,7 @@
                     </a>
                   </li>
                   <li class="nav-item">
-                    <a class="nav-link" href="klasifikasicuitan">
+                    <a class="nav-link active" href="klasifikasicuitan">
                       <i class="ni ni-send text-primary"></i>
                       <span class="nav-link-text">Klasifikasi Cuitan</span>
                     </a>
@@ -103,7 +103,7 @@
             <!-- Navigation -->
             <ul class="navbar-nav mb-md-3">
               <li class="nav-item">
-                <a class="nav-link active" href="importdataset">
+                <a class="nav-link" href="importdataset">
                     <i class="ni ni-app"></i>
                     <span class="nav-link-text">Import Dataset</span>
                   </a>
@@ -280,12 +280,12 @@
           <div class="header-body">
             <div class="row align-items-center py-4">
               <div class="col-lg-6 col-7">
-                <h6 class="h2 text-white d-inline-block mb-0">Import Dataset</h6>
+                <h6 class="h2 text-white d-inline-block mb-0">Klasifikasi Cuitan</h6>
                 <nav aria-label="breadcrumb" class="d-none d-md-inline-block ml-md-4">
                   <ol class="breadcrumb breadcrumb-links breadcrumb-dark">
                     <li class="breadcrumb-item"><a href="#"><i class="fas fa-home"></i></a></li>
                     <!-- <li class="breadcrumb-item"><a href="#">Dashboards</a></li> -->
-                    <li class="breadcrumb-item active" aria-current="page">Import Dataset</li>
+                    <li class="breadcrumb-item active" aria-current="page">Klasifikasi Cuitan</li>
                   </ol>
                 </nav> 
               </div>
@@ -296,14 +296,7 @@
               <div class="col-xl-12 col-md-12">
                 <div class="card card-stats">
                   <!-- Card body -->
-                  <form method="POST" action="" enctype="multipart/form-data" class="card-body">
-                        <div class="row">
-                            <div class="col" style="align-items: center;display: flex;">
-                                <input name="dataset" required type="file" accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel" >
-                                <button type="submit" class="btn btn-primary">Proses</button>
-                            </div>
-                        </div>
-                    </form>
+                 
                 </div>
               </div>
             </div>
@@ -311,55 +304,36 @@
                 <div class="col-xl-12 col-md-12">
                   <div class="card card-stats">
                     <!-- Card body -->
-                    <div class="card-body">
-                        <div class="card">
-                            <!-- Card header -->
-                            <div class="card-header border-0">
-                              <h3 class="mb-0">List Dataset Percakapan Twitter</h3>
-                            </div>
-                            <!-- Light table -->
-                            <div class="table-responsive">
-                              <table id="tabletesting" class="table align-items-center table-flush">
-                                <thead class="thead-light">
-                                  <tr>
-                                    <th scope="col" class="sort" data-sort="name">No.</th>
-                                    <th scope="col" class="sort" data-sort="budget">Text</th>
-                                    <th scope="col" class="sort" data-sort="status">Preprocessing</th>
-                                    <th scope="col" class="sort" data-sort="completion">Label</th>
-                                  </tr>
-                                </thead>
-                                <tbody class="list">
-                                  {%for index,value in payload%}
-                                  <tr>
-                            
-                                    <td class="budget">
-                                      {{index+1}}
-                                    </td>
-                                    <td>
-                                      {{value['before']}}
-                                    </td>
-                                    <td>
-                                      {{value['after']}}
-                                    </td>
-                                    <td>
-                                       {%if value['label']=='Positif'%}
-                                       <span class="badge badge-success">Positif</span>
-                                       {%else%}
-                                       <span class="badge badge-danger">Negatif</span>
-                                       {%endif%}
-                                    </td>
-                                  </tr>
-                                  {%endfor%}
-                                </tbody>
-                              </table>
-                            </div>
-                            <!-- Card footer -->
-                          </div>
-                    </div>
+                    <form method="POST" action="" class="card-body">
+                      <textarea name="cuitan" required class="form-control" placeholder="Muaskkan tweet yang ingin diklasifikasi" style="height:150px"></textarea>
+                      <button type="submit" class="btn btn-primary mt-3">Proses</button>
+                    </form>
                   </div>
                 </div>
               </div>
+              {%if predicted%}
+                {%if predicted=='Positif'%}
+                <div class="row">
+                  <div class="col-xl-12 col-md-12">
+                    <div class="card card-stats p-3">
+                      <!-- Card body -->
+                      <div>Hasil :  <span class="badge badge-success">Positif</span></div>
+                    </div>
+                  </div>
+                </div>
+                {%else%}
+                <div class="row">
+                  <div class="col-xl-12 col-md-12">
+                    <div class="card card-stats p-3">
+                      <!-- Card body -->
+                      <div>Hasil :  <span class="badge badge-danger">Negatif</span></div>
+                    </div>
+                  </div>
+                </div>
+                {%endif%}
+              {%endif%}
           </div>
+          
         </div>
       </div>
       <!-- Page content -->
