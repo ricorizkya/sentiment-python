@@ -3,7 +3,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="Start your development with a Dashboard for Bootstrap 4.">
     <meta name="author" content="Creative Tim">
-    <title>Acne Fighter Sentiment Analysis - Import Dataset</title>
+    <title>Acne Fighter Sentiment Analysis - Klasifikasi Cuitan Excel</title>
     <link rel="stylesheet" href="https://unpkg.com/bootstrap-table@1.19.1/dist/bootstrap-table.min.css">
     <!-- Favicon -->
     <link rel="icon" href="static/assets/img/brand/favicon.png" type="image/png">
@@ -46,7 +46,7 @@
                     </a>
                   </li>
                   <li class="nav-item">
-                    <a class="nav-link" href="klasifikasicuitanexcel">
+                    <a class="nav-link active" href="klasifikasicuitanexcel">
                       <i class="ni ni-send text-primary"></i>
                       <span class="nav-link-text">Klasifikasi Cuitan Excel</span>
                     </a>
@@ -103,7 +103,7 @@
             <!-- Navigation -->
             <ul class="navbar-nav mb-md-3">
               <li class="nav-item">
-                <a class="nav-link active" href="importdataset">
+                <a class="nav-link" href="importdataset">
                     <i class="ni ni-app"></i>
                     <span class="nav-link-text">Import Dataset</span>
                   </a>
@@ -280,12 +280,12 @@
           <div class="header-body">
             <div class="row align-items-center py-4">
               <div class="col-lg-6 col-7">
-                <h6 class="h2 text-white d-inline-block mb-0">Import Dataset</h6>
+                <h6 class="h2 text-white d-inline-block mb-0">Klasifikasi Cuitan Excel</h6>
                 <nav aria-label="breadcrumb" class="d-none d-md-inline-block ml-md-4">
                   <ol class="breadcrumb breadcrumb-links breadcrumb-dark">
                     <li class="breadcrumb-item"><a href="#"><i class="fas fa-home"></i></a></li>
                     <!-- <li class="breadcrumb-item"><a href="#">Dashboards</a></li> -->
-                    <li class="breadcrumb-item active" aria-current="page">Import Dataset</li>
+                    <li class="breadcrumb-item active" aria-current="page">Klasifikasi Cuitan Excel</li>
                   </ol>
                 </nav> 
               </div>
@@ -299,9 +299,15 @@
                   <form method="POST" action="" enctype="multipart/form-data" class="card-body">
                         <div class="row">
                             <div class="col" style="align-items: center;display: flex;">
+                                <input type="hidden" name="action" value="">
                                 <input name="dataset" required type="file" accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel" >
                                 <button type="submit" class="btn btn-primary">Proses</button>
                             </div>
+                        </div>
+                        <div class="row mt-3">
+                          <div class="col">
+                            Gunakan file excel dengan ketentuan harus ada column dengan nama <b>Text</b>
+                          </div>
                         </div>
                     </form>
                 </div>
@@ -314,9 +320,12 @@
                     <div class="card-body">
                         <div class="card">
                             <!-- Card header -->
-                            <div class="card-header border-0">
-                              <h3 class="mb-0">List Dataset Percakapan Twitter</h3>
-                            </div>
+                            <form method="POST" action="" class="card-header border-0" style="display: flex;justify-content: space-between;">
+                              <h3 class="mb-0">Hasil Klasifikasi</h3>
+                              <input type="hidden" name="action" value="pdfprint">
+                              <textarea name="json" style="display:none">{{dump | safe }}</textarea>
+                              <button type="submit" class="btn btn-primary">Export to PDF</button>
+                            </form>
                             <!-- Light table -->
                             <div class="table-responsive">
                               <table id="tabletesting" class="table align-items-center table-flush">
@@ -325,30 +334,21 @@
                                     <th scope="col" class="sort" data-sort="name">No.</th>
                                     <th scope="col" class="sort" data-sort="budget">Text</th>
                                     <th scope="col" class="sort" data-sort="status">Preprocessing</th>
-                                    <th scope="col" class="sort" data-sort="completion">Label</th>
+                                    <th scope="col" class="sort" data-sort="completion">Hasil Klasifikasi</th>
                                   </tr>
                                 </thead>
                                 <tbody class="list">
                                   {%for index,value in payload%}
-                                  <tr>
-                            
-                                    <td class="budget">
-                                      {{index+1}}
-                                    </td>
-                                    <td>
-                                      {{value['before']}}
-                                    </td>
-                                    <td>
-                                      {{value['after']}}
-                                    </td>
-                                    <td>
-                                       {%if value['label']=='Positif'%}
-                                       <span class="badge badge-success">Positif</span>
-                                       {%else%}
-                                       <span class="badge badge-danger">Negatif</span>
-                                       {%endif%}
-                                    </td>
-                                  </tr>
+                                    <tr>
+                                      <td>{{index+1}}</td>
+                                      <td>{{value["before"]}}</td>
+                                      <td>{{value["after"]}}</td>
+                                      {%if value["predicted"]=="Positif"%}
+                                        <td><span class="badge badge-success">Positif</span></td>
+                                      {%else%}
+                                        <td><span class="badge badge-danger">Negatif</span></td>
+                                      {%endif%}
+                                    </tr>
                                   {%endfor%}
                                 </tbody>
                               </table>
@@ -415,6 +415,6 @@
         $('#tabletesting').bootstrapTable({
             pagination:true
         });
-
+        let data = {{dump | safe}}
     </script>
   </body></html>
