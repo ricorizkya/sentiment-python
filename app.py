@@ -32,7 +32,7 @@ app.secret_key="thisisasecretkey"
 
 @app.route("/", methods=["POST","GET"])
 def index():
-    if session["login"]==True:
+    if session["login"]:
         return redirect(url_for("dashboard"))
 
 
