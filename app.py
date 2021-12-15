@@ -239,9 +239,9 @@ def importdataset():
 
 @app.route("/keluar")
 def keluar():
-    session["login"] = None
-    session["email"] = None
-    session["password"] = None
+    session.pop("login")
+    session.pop("email")
+    session.pop("password")
     return redirect(url_for("index"))
 
 # Fungsi flask untuk menjalankan app
