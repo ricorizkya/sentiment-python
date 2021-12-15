@@ -72,7 +72,7 @@ def index():
 @app.route("/dashboard")
 def dashboard():
 
-    if not session["login"]:
+    if session and not session["login"]:
         return redirect(url_for("index"))
 
 
@@ -103,7 +103,7 @@ def dashboard():
 @app.route("/klasifikasicuitan", methods=["POST","GET"])
 def klasifikasicuitan():
 
-    if not session["login"]:
+    if session and not session["login"]:
         return redirect(url_for("index"))
 
 
@@ -129,7 +129,7 @@ def klasifikasicuitan():
 
 @app.route("/klasifikasicuitanexcel", methods=["POST","GET"])
 def klasifikasicuitanexcel():
-    if not session["login"]:
+    if session and not session["login"]:
         return redirect(url_for("index"))
     if request.method=="POST":
 
@@ -178,7 +178,7 @@ def klasifikasicuitanexcel():
 @app.route("/importdataset",methods=["POST","GET"])
 def importdataset():
 
-    if not session["login"]:
+    if session and not session["login"]:
         return redirect(url_for("index"))
 
     if request.method=="POST":
