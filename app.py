@@ -25,6 +25,7 @@ app = Flask(__name__)
 app.secret_key="thisisasecretkey"
 
 
+
 # Route GET dan POST untuk nedpoint "/" 
 # Berisi fungsi untuk mengecek session apakah sudah login atau belum
 # Kemudian terdapat fungsi ketika dilakukan request POST maka melakukan pencocokan antara username password input dengan yang berada pada database
@@ -32,7 +33,7 @@ app.secret_key="thisisasecretkey"
 
 @app.route("/", methods=["POST","GET"])
 def index():
-    if session and session["login"]:
+    if 'login' in session:
         return redirect(url_for("dashboard"))
 
 
@@ -72,7 +73,7 @@ def index():
 @app.route("/dashboard")
 def dashboard():
 
-    if session and not session["login"]:
+    if 'login' not in session:
         return redirect(url_for("index"))
 
 
@@ -103,7 +104,7 @@ def dashboard():
 @app.route("/klasifikasicuitan", methods=["POST","GET"])
 def klasifikasicuitan():
 
-    if session and not session["login"]:
+    if 'login' not in session:
         return redirect(url_for("index"))
 
 
@@ -129,7 +130,7 @@ def klasifikasicuitan():
 
 @app.route("/klasifikasicuitanexcel", methods=["POST","GET"])
 def klasifikasicuitanexcel():
-    if session and not session["login"]:
+    if 'login' not in session:
         return redirect(url_for("index"))
     if request.method=="POST":
 
@@ -178,7 +179,7 @@ def klasifikasicuitanexcel():
 @app.route("/importdataset",methods=["POST","GET"])
 def importdataset():
 
-    if session and not session["login"]:
+    if 'login' not in session:
         return redirect(url_for("index"))
 
     if request.method=="POST":
