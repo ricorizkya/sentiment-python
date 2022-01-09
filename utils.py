@@ -17,7 +17,7 @@ def create_model_bydataset():
     cursor.execute("SELECT * FROM dataset")
     dataset = cursor.fetchall()
 
-    cursor.execute("SELECT * FROM preprocessing")
+    cursor.execute("SELECT * FROM stemming")
     preprocessing = cursor.fetchall()
 
     cursor.close()
