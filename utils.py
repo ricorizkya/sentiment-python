@@ -36,16 +36,28 @@ def create_model_bydataset():
 
     return model,vectorizer
 
+def casefoldingtext(text):
+    t = text.lower()
+    return t
+
+def stopwordremovaltext(text):
+    factory = StopWordRemoverFactory()
+    stopword = factory.create_stop_word_remover()
+    satu = stopword.remove(text)
+
+    return satu
+
 
 def preprocessingtext(text):
 
-    factory = StopWordRemoverFactory()
-    stopword = factory.create_stop_word_remover()
+    # factory = StopWordRemoverFactory()
+    # stopword = factory.create_stop_word_remover()
+    # satu = stopword.remove(text)
 
     #### MELAKUKAN PROSES STEMMING STOPWORD BAHASA INDONESIA
-    satu = stopword.remove(text)
+    
     #### MENGHILANGKAN TEXT TIDAK PENTING SEPERTI HASHTAG DAN MENTION
-    dua = re.sub(r"@[^\s]+"," ",satu)
+    dua = re.sub(r"@[^\s]+"," ",text)
     dua = re.sub(r"#[^\s]+"," ",dua)
     dua = re.sub(r"\."," ",dua)
     dua = re.sub(r"http[^\s]+"," ",dua)
@@ -85,5 +97,5 @@ def preprocessingtext(text):
     dua = re.sub(r'\s+$',"",dua)   
     dua = re.sub(r'^\s+',"",dua)   
     #### MENGUBAH CASE KATA MENJADI LOWERCASE
-    tiga = dua.lower()
-    return tiga
+    ##tiga = dua.lower()
+    return dua

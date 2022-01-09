@@ -8,7 +8,7 @@ from database.koneksi import mydb
 import json
 
 # Fungsi Utils Untuk Preprocessing Text dan Generate Model
-from utils import preprocessingtext, create_model_bydataset
+from utils import preprocessingtext, stopwordremovaltext, casefoldingtext, create_model_bydataset
 
 # Import Module Pandas
 import pandas as pd
@@ -187,16 +187,38 @@ def importdataset():
         excel = pd.read_excel(file)
 
         text = [(x[1]["Text"],x[1]["Labelling"]) for x in excel.iterrows()]
-        preprocessed = [(preprocessingtext(x[0]),) for x in text]
+
+        cleansing = [(preprocessingtext(x[0]),) for x in text]
+        casefolding = [(casefoldingtext(x[0]),) for x in cleansing]
+        tokenizing = [(str(x[0].split(" ")),) for x in casefolding]
+        stopwordremoval = [(str(stopwordremovaltext(x[0]).split(" ")),) for x in casefolding]
+        stemming = [(stopwordremovaltext(x[0]),) for x in casefolding]
         
         mydb.connect()
         cursor = mydb.cursor()
 
+
+
         cursor.execute("DELETE FROM dataset")
         cursor.execute("DELETE FROM preprocessing")
+        cursor.execute("DELETE FROM cleansing")
+        cursor.execute("DELETE FROM casefolding")
+        cursor.execute("DELETE FROM tokenizing")
+        cursor.execute("DELETE FROM stopwordremoval")
+        cursor.execute("DELETE FROM stemming")
+
+
+
 
         cursor.executemany("INSERT INTO dataset VALUES (%s,%s)",text)
-        cursor.executemany("INSERT INTO preprocessing VALUES (%s)",preprocessed)
+        # cursor.executemany("INSERT INTO preprocessing VALUES (%s)",preprocessed)
+
+        cursor.executemany("INSERT INTO cleansing VALUES (%s)",cleansing)
+        cursor.executemany("INSERT INTO casefolding VALUES (%s)",casefolding)
+        cursor.executemany("INSERT INTO tokenizing VALUES (%s)",tokenizing)
+        cursor.executemany("INSERT INTO stopwordremoval VALUES (%s)",stopwordremoval)
+        cursor.executemany("INSERT INTO stemming VALUES (%s)",stemming)
+
 
         mydb.commit()
         cursor.close()
@@ -215,8 +237,23 @@ def importdataset():
     cursor.execute("SELECT * FROM dataset")
     dataset = cursor.fetchall()
 
-    cursor.execute("SELECT * FROM preprocessing")
-    preprocessing = cursor.fetchall()
+    # cursor.execute("SELECT * FROM preprocessing")
+    # preprocessing = cursor.fetchall()
+
+    cursor.execute("SELECT * FROM cleansing")
+    cleansing = cursor.fetchall()
+
+    cursor.execute("SELECT * FROM casefolding")
+    casefolding = cursor.fetchall()
+
+    cursor.execute("SELECT * FROM tokenizing")
+    tokenizing = cursor.fetchall()
+
+    cursor.execute("SELECT * FROM stopwordremoval")
+    stopwordremoval = cursor.fetchall()
+
+    cursor.execute("SELECT * FROM stemming")
+    stemming = cursor.fetchall()
 
     cursor.close()
     mydb.close()
@@ -226,7 +263,11 @@ def importdataset():
     for index, value in enumerate(dataset):
         payload.append({
             "before":value[0],
-            "after":preprocessing[index][0],
+            "cleansing":cleansing[index][0],
+            "casefolding":casefolding[index][0],
+            "tokenizing":tokenizing[index][0],
+            "stopwordremoval":stopwordremoval[index][0],
+            "stemming":stemming[index][0],
             "label":value[1]
         })
 

@@ -322,10 +322,14 @@
                               <table id="tabletesting" class="table align-items-center table-flush">
                                 <thead class="thead-light">
                                   <tr>
-                                    <th scope="col" class="sort" data-sort="name">No.</th>
-                                    <th scope="col" class="sort" data-sort="budget">Text</th>
-                                    <th scope="col" class="sort" data-sort="status">Preprocessing</th>
-                                    <th scope="col" class="sort" data-sort="completion">Label</th>
+                                    <th scope="col" data-width="100" class="sort" >No.</th>
+                                    <th scope="col" data-width="100" class="sort" >Text</th>
+                                    <th scope="col" data-width="100" class="sort" >Cleansing</th>
+                                    <th scope="col" data-width="100" class="sort" >Case Folding</th>
+                                    <th scope="col" data-width="100" class="sort" >Tokenizing</th>
+                                    <th scope="col" data-width="100" class="sort" >Stopword Removal</th>
+                                    <th scope="col" data-width="100" class="sort" >Stemming</th>
+                                    <th scope="col" data-width="100">Label</th>
                                   </tr>
                                 </thead>
                                 <tbody class="list">
@@ -339,7 +343,19 @@
                                       {{value['before']}}
                                     </td>
                                     <td>
-                                      {{value['after']}}
+                                      {{value['cleansing']}}
+                                    </td>
+                                    <td>
+                                      {{value['casefolding']}}
+                                    </td>
+                                    <td>
+                                      {{value['tokenizing']}}
+                                    </td>
+                                    <td>
+                                      {{value['stopwordremoval']}}
+                                    </td>
+                                    <td>
+                                      {{value['stemming']}}
                                     </td>
                                     <td>
                                        {%if value['label']=='Positif'%}
@@ -413,7 +429,7 @@
   
     <script>
         $('#tabletesting').bootstrapTable({
-            pagination:true
+            pagination:true,
         });
 
     </script>
