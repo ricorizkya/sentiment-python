@@ -333,7 +333,11 @@
                                   <tr>
                                     <th scope="col" class="sort" data-sort="name">No.</th>
                                     <th scope="col" class="sort" data-sort="budget">Text</th>
-                                    <th scope="col" class="sort" data-sort="status">Preprocessing</th>
+                                    <th scope="col" data-width="100" class="sort" >Cleansing</th>
+                                    <th scope="col" data-width="100" class="sort" >Case Folding</th>
+                                    <th scope="col" data-width="100" class="sort" >Tokenizing</th>
+                                    <th scope="col" data-width="100" class="sort" >Stopword Removal</th>
+                                    <th scope="col" data-width="100" class="sort" >Stemming</th>
                                     <th scope="col" class="sort" data-sort="completion">Hasil Klasifikasi</th>
                                   </tr>
                                 </thead>
@@ -342,7 +346,21 @@
                                     <tr>
                                       <td>{{index+1}}</td>
                                       <td>{{value["before"]}}</td>
-                                      <td>{{value["after"]}}</td>
+                                      <td>
+                                        {{value['cleansing']}}
+                                      </td>
+                                      <td>
+                                        {{value['casefolding']}}
+                                      </td>
+                                      <td>
+                                        {{value['tokenizing']}}
+                                      </td>
+                                      <td>
+                                        {{value['stopwordremoval']}}
+                                      </td>
+                                      <td>
+                                        {{value['stemming']}}
+                                      </td>
                                       {%if value["predicted"]=="Positif"%}
                                         <td><span class="badge badge-success">Positif</span></td>
                                       {%else%}

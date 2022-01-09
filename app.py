@@ -155,9 +155,16 @@ def klasifikasicuitanexcel():
 
         text = [x[1]["Text"] for x in excel.iterrows()]
 
+        cleansing = [(preprocessingtext(x),) for x in text]
+        casefolding = [(casefoldingtext(x[0]),) for x in cleansing]
+        tokenizing = [str(x[0].split(" ")) for x in casefolding]
+        stopwordremoval = [str(stopwordremovaltext(x[0]).split(" ")) for x in casefolding]
+        stemming = [stopwordremovaltext(x[0]) for x in casefolding]
+
         payload = []
 
-        for x in text:
+        for index,x in enumerate(text):
+
             pre = preprocessingtext(x)
             txt = vectorizer.transform([pre])
             predicted = model.predict(txt)
@@ -165,8 +172,14 @@ def klasifikasicuitanexcel():
             payload.append({
                 "before":x,
                 "after":pre,
+                "cleansing":cleansing[index][0],
+                "casefolding":casefolding[index][0],
+                "tokenizing":tokenizing[index],
+                "stopwordremoval":stopwordremoval[index],
+                "stemming":stemming[index],
                 "predicted":predicted[0]
             })
+        print(payload)
         email = session["email"]
         return render_template("klasifikasicuitanexcel.html",email=email,payload=enumerate(payload),dump=json.dumps(payload))
     email = session["email"]
