@@ -19,6 +19,11 @@ import numpy as np
 # Module pdfkit untuk mengubah HTML menjadi PDF
 import pdfkit as pdf
 
+from sklearn.model_selection import train_test_split
+from sklearn.feature_extraction.text import TfidfVectorizer
+from sklearn.naive_bayes import MultinomialNB
+from sklearn.metrics import confusion_matrix
+from sklearn.metrics import classification_report
 
 # Inisiasi Variabel main application flask
 app = Flask(__name__)
@@ -299,6 +304,82 @@ def keluar():
     return redirect(url_for("index"))
 
 # Fungsi flask untuk menjalankan app
+
+@app.route("/ujivalidasi", methods=["POST","GET"])
+def ujivalidasi():
+    if request.method=="POST":
+        mydb.connect()
+        cursor = mydb.cursor()
+
+        cursor.execute("SELECT * FROM dataset")
+        dataset = cursor.fetchall()
+        cursor.execute("SELECT * FROM stemming")
+        stemmed = cursor.fetchall()
+
+        corpus = [x[0] for x in stemmed]
+        vectorizer = TfidfVectorizer()
+
+        
+        X = vectorizer.fit_transform(corpus)
+
+        arr = []
+
+        for index,key in enumerate(vectorizer.vocabulary_):
+            payload = {}
+            payload["vocabulary"]=key
+            payload["idf"]=vectorizer.idf_[index]
+            arr.append(payload)
+
+        cursor.close()
+        mydb.close()
+
+
+        ##############################
+
+        mydb.connect()
+        cursor = mydb.cursor()
+
+        cursor.execute("SELECT * FROM dataset")
+        dataset = cursor.fetchall()
+
+        cursor.execute("SELECT * FROM stemming")
+        preprocessing = cursor.fetchall()
+
+        cursor.close()
+        mydb.close()
+
+        X = [x[0] for x in preprocessing]
+        y = [x[1] for x in dataset]
+
+        X_train, X_test, y_train, y_test = train_test_split(X,y, test_size=0.2, train_size=0.8, random_state=45)
+        vectorizer = TfidfVectorizer(min_df=0.0, max_df=1.0, sublinear_tf=True, use_idf=True, stop_words='english')
+
+        X_train_tf = vectorizer.fit_transform(X_train)
+
+        model = MultinomialNB()
+        model.fit(X_train_tf, y_train)
+
+
+        X_test_tf = vectorizer.transform(X_test)
+        y_pred = model.predict(X_test_tf)
+
+       
+        report = classification_report(y_test, y_pred, target_names=["Positif","Negatif"])
+
+
+        return render_template("ujivalidasi.html",datasetlen=len(dataset),arr=arr,report=str(report))
+    mydb.connect()
+    cursor = mydb.cursor()
+
+    cursor.execute("SELECT * FROM dataset")
+    dataset = cursor.fetchall()
+
+    cursor.close()
+    mydb.close()
+
+    return render_template("ujivalidasi.html",datasetlen=len(dataset),arr=[])
+
+    
 
 if __name__=="__main__":
     app.run(debug=True)
