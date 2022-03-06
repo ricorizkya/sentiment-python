@@ -217,13 +217,13 @@ def importdataset():
 
 
 
-        cursor.execute("DELETE FROM dataset")
-        cursor.execute("DELETE FROM preprocessing")
-        cursor.execute("DELETE FROM cleansing")
-        cursor.execute("DELETE FROM casefolding")
-        cursor.execute("DELETE FROM tokenizing")
-        cursor.execute("DELETE FROM stopwordremoval")
-        cursor.execute("DELETE FROM stemming")
+        # cursor.execute("DELETE FROM dataset")
+        # cursor.execute("DELETE FROM preprocessing")
+        # cursor.execute("DELETE FROM cleansing")
+        # cursor.execute("DELETE FROM casefolding")
+        # cursor.execute("DELETE FROM tokenizing")
+        # cursor.execute("DELETE FROM stopwordremoval")
+        # cursor.execute("DELETE FROM stemming")
 
 
 
