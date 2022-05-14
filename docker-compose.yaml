@@ -1,0 +1,39 @@
+version: '3.8'
+services:
+  python-sentiment:
+    image: rahadiangg/sentiment:python
+    volumes:
+      - ./:/usr/src/app
+    networks:
+      - sentiment
+    ports:
+      - 5000:5000
+    depends_on:
+      - mysql-sentiment
+    restart: on-failure
+  mysql-sentiment:
+    image: mysql:8.0
+    container_name: mysql-sentiment
+    restart: on-failure
+    networks:
+      - sentiment
+    environment:
+      - MYSQL_ROOT_PASSWORD=mysql-sentiment
+      - MYSQL_DATABASE=sentiment
+  phpmyadmin:
+    image: phpmyadmin:5.1.3-apache
+    restart: always
+    ports:
+      - 8080:80
+    environment:
+      - PMA_ARBITRARY=1
+      - PMA_HOST=mysql-sentiment
+      - PMA_PORT=3306
+      - PMA_USER=root
+      - PMA_PASSWORD=mysql-sentiment
+    networks:
+      - sentiment
+    depends_on:
+      - mysql-sentiment
+networks:
+  sentiment:

@@ -1,0 +1,15 @@
+version: '3.8'
+services:
+  python-sentiment:
+    build:
+      context: .
+    container_name: python-sentiment
+    volumes:
+      - ./:/usr/src/app
+    networks:
+      - net-mysql-local
+    ports:
+      - 8080:5000
+networks:
+  net-mysql-local:
+    external: true

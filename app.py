@@ -1,14 +1,17 @@
 # Import Module Flask dan Yang Lain Untuk Keperluan HTTP Server
 from flask import Flask, json, render_template,request,session,redirect,url_for,jsonify,send_file
+from sklearn.cluster import kmeans_plusplus
 
 # Import Module Koneksi Mysql Untuk Mengakses Database
 from database.koneksi import mydb
+
+import tweepy
 
 # Import Module json untuk manipulasi data python menjadi json
 import json
 
 # Fungsi Utils Untuk Preprocessing Text dan Generate Model
-from utils import preprocessingtext, stopwordremovaltext, casefoldingtext, create_model_bydataset
+from utils import preprocessingtext, stopwordremovaltext, casefoldingtext, create_model_bydataset,get_client_tweepy
 
 # Import Module Pandas
 import pandas as pd
@@ -116,6 +119,9 @@ def klasifikasicuitan():
     if request.method=="POST":
 
         cuitan = request.form["cuitan"]
+
+        ## menambah preprocessing text pada klasifikasi cuitan/text
+        cuitan = preprocessingtext(cuitan)
 
         model, vectorizer = create_model_bydataset()
 
@@ -379,7 +385,54 @@ def ujivalidasi():
 
     return render_template("ujivalidasi.html",datasetlen=len(dataset),arr=[])
 
-    
+@app.route("/exportexcelscrapping", methods=["POST"])
+def exportexcelscrapping():
+
+    api = get_client_tweepy()
+    public_tweets = tweepy.Cursor(api.search_tweets, request.form["query"],count=100).items(int(request.form["qty"]))
+
+    payload = []
+
+    for x in public_tweets:
+        payload.append(x.text)
+
+    df = pd.DataFrame(payload, columns = ["Text"])
+
+    writer = pd.ExcelWriter("import.xlsx", engine='xlsxwriter')
+
+    df.to_excel(writer)
+
+    writer.save()
+
+    return send_file('import.xlsx', attachment_filename='import.xlsx')
+
+@app.route("/scrapingtwitter", methods=["POST","GET"])
+def scrappingtwitter():
+    if request.method=="POST":
+        api = get_client_tweepy()
+        public_tweets = tweepy.Cursor(api.search_tweets, request.form["query"],count=100).items(int(request.form["qty"]))
+
+        payload = []
+
+        for x in public_tweets:
+            payload.append({"text":x.text})
+
+        return render_template("scrapingtwitter.html",query=request.form["query"],qty=request.form["qty"],data=enumerate(payload))
+
+    return render_template("scrapingtwitter.html")
+
+# @app.route("/debug")
+# def debug():
+#     api = get_client_tweepy()
+#     public_tweets = tweepy.Cursor(api.search_tweets, "putin",count=100).items(10)
+
+#     count=0
+
+#     for x in public_tweets:
+#        print(x.text)
+       
+#     return "123"
+
 
 if __name__=="__main__":
-    app.run(debug=True)
+    app.run(host='0.0.0.0', debug=True)
