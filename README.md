@@ -1,3 +1,8 @@
+# Snetiment Python
+Untuk menajalankan aplikasi ini direkomendasikan menggunakan Docker.  Aplikasi berjalan di port 5000 & untuk PHPMyadmin berjalan di port 8080
+
+
+---
 ## Requirments
 
 Pastika git, docker & docker-compose sudah terinstall. Jika menggunakan Windows atau Mac, docker-compose otomatis terinstall ketika menginstall docker.
@@ -21,6 +26,12 @@ C:\python-sentiment> docker-compose up -d
 ```
 
 > Jika sudah selesai aplikasi akan otomatis jalan di backgroud
+
+### Import Schema Database
+
+Masuk kedalam dashboard PHPMyadmin dan import database yang ada di ``db/sentiment.sql``
+
+---
 
 ## Menjalankan & Menghentikan Aplikasi
 
