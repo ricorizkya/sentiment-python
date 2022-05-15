@@ -2,8 +2,126 @@
   <thead>
     <tr style="text-align: right;">
       <th></th>
+      <th>before</th>
+      <th>after</th>
+      <th>cleansing</th>
+      <th>casefolding</th>
+      <th>tokenizing</th>
+      <th>stopwordremoval</th>
+      <th>stemming</th>
+      <th>predicted</th>
     </tr>
   </thead>
   <tbody>
+    <tr>
+      <th>0</th>
+      <td>RT @Zaindamai: President Indonesia Joko Widodo met Elon Musk for further business tie @elonmusk @1AmyChew @ChannelNewsAsia @ASEAN @KompasTV…</td>
+      <td>President Indonesia Joko Widodo met Elon Musk for further business tie</td>
+      <td>President Indonesia Joko Widodo met Elon Musk for further business tie</td>
+      <td>president indonesia joko widodo met elon musk for further business tie</td>
+      <td>['president', 'indonesia', 'joko', 'widodo', 'met', 'elon', 'musk', 'for', 'further', 'business', 'tie']</td>
+      <td>['president', 'indonesia', 'joko', 'widodo', 'met', 'elon', 'musk', 'for', 'further', 'business', 'tie']</td>
+      <td>president indonesia joko widodo met elon musk for further business tie</td>
+      <td>Negatif</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>RT @MegaPKeliduan: Jangan kira dengan anda membawa-bawa nama @jokowi lalu Anda akan aman @ruhutsitompul?. Pidato pangkopimti Kopatrev @arvi…</td>
+      <td>Jangan kira dengan anda membawa bawa nama lalu Anda akan aman Pidato pangkopimti Kopatrev</td>
+      <td>Jangan kira dengan anda membawa bawa nama lalu Anda akan aman Pidato pangkopimti Kopatrev</td>
+      <td>jangan kira dengan anda membawa bawa nama lalu anda akan aman pidato pangkopimti kopatrev</td>
+      <td>['jangan', 'kira', 'dengan', 'anda', 'membawa', 'bawa', 'nama', 'lalu', 'anda', 'akan', 'aman', 'pidato', 'pangkopimti', 'kopatrev']</td>
+      <td>['jangan', 'kira', 'membawa', 'bawa', 'nama', 'lalu', 'anda', 'akan', 'aman', 'pidato', 'pangkopimti', 'kopatrev']</td>
+      <td>jangan kira membawa bawa nama lalu anda akan aman pidato pangkopimti kopatrev</td>
+      <td>Negatif</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>RT @maman1965: Selamat pagi Pak Presiden @jokowi . Saya jadi kepo, apa ya, yang diperlihatkan Mas @elonmusk di hapenya. https://t.co/NYuNMf…</td>
+      <td>Selamat pagi Pak Presiden Saya jadi kepo apa ya yang diperlihatkan Mas di hapenya</td>
+      <td>Selamat pagi Pak Presiden Saya jadi kepo apa ya yang diperlihatkan Mas di hapenya</td>
+      <td>selamat pagi pak presiden saya jadi kepo apa ya yang diperlihatkan mas di hapenya</td>
+      <td>['selamat', 'pagi', 'pak', 'presiden', 'saya', 'jadi', 'kepo', 'apa', 'ya', 'yang', 'diperlihatkan', 'mas', 'di', 'hapenya']</td>
+      <td>['selamat', 'pagi', 'pak', 'presiden', 'jadi', 'kepo', 'apa', 'yang', 'diperlihatkan', 'mas', 'hapenya']</td>
+      <td>selamat pagi pak presiden jadi kepo apa yang diperlihatkan mas hapenya</td>
+      <td>Negatif</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>Natalius Pigai: Kasihan Presiden Jokowi Hanya Jadi Marketer Bisnis Individu https://t.co/WzbJXQALWS\n#BeritaIslam\nhttps://t.co/JWGKXW8x0t</td>
+      <td>Natalius Pigai Kasihan Presiden Jokowi Hanya Jadi Marketer Bisnis Individu</td>
+      <td>Natalius Pigai Kasihan Presiden Jokowi Hanya Jadi Marketer Bisnis Individu</td>
+      <td>natalius pigai kasihan presiden jokowi hanya jadi marketer bisnis individu</td>
+      <td>['natalius', 'pigai', 'kasihan', 'presiden', 'jokowi', 'hanya', 'jadi', 'marketer', 'bisnis', 'individu']</td>
+      <td>['natalius', 'pigai', 'kasihan', 'presiden', 'jokowi', 'jadi', 'marketer', 'bisnis', 'individu']</td>
+      <td>natalius pigai kasihan presiden jokowi jadi marketer bisnis individu</td>
+      <td>Negatif</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>RT @luqmanlong: Pak Jokowi pergi ke Amerika siap berjumpa Elon Musk dan pergi Space X dah.\n\nIsmail Sabri punya style pula - pergi singgah L…</td>
+      <td>Pak Jokowi pergi ke Amerika siap berjumpa Elon Musk dan pergi Space X dah Ismail Sabri punya style pula pergi singgah L</td>
+      <td>Pak Jokowi pergi ke Amerika siap berjumpa Elon Musk dan pergi Space X dah Ismail Sabri punya style pula pergi singgah L</td>
+      <td>pak jokowi pergi ke amerika siap berjumpa elon musk dan pergi space x dah ismail sabri punya style pula pergi singgah l</td>
+      <td>['pak', 'jokowi', 'pergi', 'ke', 'amerika', 'siap', 'berjumpa', 'elon', 'musk', 'dan', 'pergi', 'space', 'x', 'dah', 'ismail', 'sabri', 'punya', 'style', 'pula', 'pergi', 'singgah', 'l']</td>
+      <td>['pak', 'jokowi', 'pergi', 'amerika', 'siap', 'berjumpa', 'elon', 'musk', 'pergi', 'space', 'x', 'dah', 'ismail', 'sabri', 'punya', 'style', 'pergi', 'singgah', 'l']</td>
+      <td>pak jokowi pergi amerika siap berjumpa elon musk pergi space x dah ismail sabri punya style pergi singgah l</td>
+      <td>Negatif</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>@DeWan14683995 @kangdede78 @jokowi 🤣🤭</td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td>['']</td>
+      <td>['']</td>
+      <td></td>
+      <td>Negatif</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>@triajaaa Yang ada demam malaria melihatnya para kadrun yg selalu memfitnah pak @jokowi palingan hanya bisa melihat… https://t.co/uUmxIoeVFp</td>
+      <td>Yang ada demam malaria melihatnya para kadrun yg selalu memfitnah pak palingan hanya bisa melihat</td>
+      <td>Yang ada demam malaria melihatnya para kadrun yg selalu memfitnah pak palingan hanya bisa melihat</td>
+      <td>yang ada demam malaria melihatnya para kadrun yg selalu memfitnah pak palingan hanya bisa melihat</td>
+      <td>['yang', 'ada', 'demam', 'malaria', 'melihatnya', 'para', 'kadrun', 'yg', 'selalu', 'memfitnah', 'pak', 'palingan', 'hanya', 'bisa', 'melihat']</td>
+      <td>['ada', 'demam', 'malaria', 'melihatnya', 'kadrun', 'yg', 'selalu', 'memfitnah', 'pak', 'palingan', 'bisa', 'melihat']</td>
+      <td>ada demam malaria melihatnya kadrun yg selalu memfitnah pak palingan bisa melihat</td>
+      <td>Negatif</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>@KRMTRoySuryo2 @jokowi @elonmusk Beda kelas pa' bos..😏😔</td>
+      <td>Beda kelas pa bos</td>
+      <td>Beda kelas pa bos</td>
+      <td>beda kelas pa bos</td>
+      <td>['beda', 'kelas', 'pa', 'bos', '']</td>
+      <td>['beda', 'kelas', 'pa', 'bos', '']</td>
+      <td>beda kelas pa bos</td>
+      <td>Negatif</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>@poday123 @elonmusk @jokowi kelamaan😃</td>
+      <td>kelamaan</td>
+      <td>kelamaan</td>
+      <td>kelamaan</td>
+      <td>['kelamaan']</td>
+      <td>['kelamaan']</td>
+      <td>kelamaan</td>
+      <td>Negatif</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>RT @luqmanlong: Pak Jokowi pergi ke Amerika siap berjumpa Elon Musk dan pergi Space X dah.\n\nIsmail Sabri punya style pula - pergi singgah L…</td>
+      <td>Pak Jokowi pergi ke Amerika siap berjumpa Elon Musk dan pergi Space X dah Ismail Sabri punya style pula pergi singgah L</td>
+      <td>Pak Jokowi pergi ke Amerika siap berjumpa Elon Musk dan pergi Space X dah Ismail Sabri punya style pula pergi singgah L</td>
+      <td>pak jokowi pergi ke amerika siap berjumpa elon musk dan pergi space x dah ismail sabri punya style pula pergi singgah l</td>
+      <td>['pak', 'jokowi', 'pergi', 'ke', 'amerika', 'siap', 'berjumpa', 'elon', 'musk', 'dan', 'pergi', 'space', 'x', 'dah', 'ismail', 'sabri', 'punya', 'style', 'pula', 'pergi', 'singgah', 'l']</td>
+      <td>['pak', 'jokowi', 'pergi', 'amerika', 'siap', 'berjumpa', 'elon', 'musk', 'pergi', 'space', 'x', 'dah', 'ismail', 'sabri', 'punya', 'style', 'pergi', 'singgah', 'l']</td>
+      <td>pak jokowi pergi amerika siap berjumpa elon musk pergi space x dah ismail sabri punya style pergi singgah l</td>
+      <td>Negatif</td>
+    </tr>
   </tbody>
 </table>
