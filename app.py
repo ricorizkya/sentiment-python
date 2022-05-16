@@ -34,7 +34,7 @@ app.secret_key="thisisasecretkey"
 
 
 
-# Route GET dan POST untuk nedpoint "/" 
+# Route GET dan POST untuk nedpoint "/"
 # Berisi fungsi untuk mengecek session apakah sudah login atau belum
 # Kemudian terdapat fungsi ketika dilakukan request POST maka melakukan pencocokan antara username password input dengan yang berada pada database
 # Ketika dilakukan request GET maka akan menampilkan html biasa
@@ -57,7 +57,7 @@ def index():
 
         cursor.close()
         mydb.close()
-        
+
         if row==None:
             return render_template("login.html",err=True,message="Akun tidak ditemukan")
         else:
@@ -104,7 +104,7 @@ def dashboard():
     mydb.close()
 
     email = session["email"]
-    return render_template("dashboard.html",email=email,count=len(row),lenpositif=lenpositif,lennegatif=lennegatif)
+    return render_template("index.html",email=email,count=len(row),lenpositif=lenpositif,lennegatif=lennegatif)
 
 # Route GET dan POST untuk endpoint /klasifikasicuitan
 # Berfungsi untuk menghandle klasifikasi single cuitan
@@ -146,7 +146,7 @@ def klasifikasicuitanexcel():
     if request.method=="POST":
 
         if request.form["action"]=="pdfprint":
-            
+
             json_ = request.form["json"]
 
             parsed = json.loads(json_)
@@ -179,7 +179,7 @@ def klasifikasicuitanexcel():
             pre = preprocessingtext(x)
             txt = vectorizer.transform([pre])
             predicted = model.predict(txt)
-        
+
             payload.append({
                 "before":x,
                 "after":pre,
@@ -217,7 +217,7 @@ def importdataset():
         tokenizing = [(str(x[0].split(" ")),) for x in casefolding]
         stopwordremoval = [(str(stopwordremovaltext(x[0]).split(" ")),) for x in casefolding]
         stemming = [(stopwordremovaltext(x[0]),) for x in casefolding]
-        
+
         mydb.connect()
         cursor = mydb.cursor()
 
@@ -300,7 +300,7 @@ def importdataset():
     return render_template("importdataset.html",email=email,payload=enumerate(payload))
 
 # GET Request untuk endpoint /keluar
-# Berfungsi untuk menghapus session 
+# Berfungsi untuk menghapus session
 
 @app.route("/keluar")
 def keluar():
@@ -325,7 +325,7 @@ def ujivalidasi():
         corpus = [x[0] for x in stemmed]
         vectorizer = TfidfVectorizer()
 
-        
+
         X = vectorizer.fit_transform(corpus)
 
         arr = []
@@ -369,7 +369,7 @@ def ujivalidasi():
         X_test_tf = vectorizer.transform(X_test)
         y_pred = model.predict(X_test_tf)
 
-       
+
         report = classification_report(y_test, y_pred, target_names=["Positif","Negatif"])
 
 
@@ -430,7 +430,7 @@ def scrappingtwitter():
 
 #     for x in public_tweets:
 #        print(x.text)
-       
+
 #     return "123"
 
 
